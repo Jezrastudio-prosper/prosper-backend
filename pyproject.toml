@@ -1,0 +1,146 @@
+[project]
+name = "prosper_backend"
+version = "0.1.0"
+description = ""
+requires-python = ">=3.14"
+
+# -----------------------------------------------------------------------------
+# DEPENDENCIES
+# Managed by uv. Run `uv sync` to install.
+# Docs: https://docs.astral.sh/uv/
+# -----------------------------------------------------------------------------
+
+dependencies = [
+    "aiosmtpd~=1.4",# for mail_debug
+    "dj-config-url>=0.1,<1.0",
+    "dj-database-url~=3.1",
+    "django~=6.0",
+    "django-cors-headers~=4.9",
+    "django-extensions~=4.1",
+    "django-filter~=25.2",
+    "django-health-check~=4.4",
+    # "django-storages[s3]>=1.14",
+    "django-rest-knox>=5.0.4",
+    "djangorestframework~=3.17",
+    "drf-spectacular>=0.29,<1.0",
+    "gunicorn~=26.0",
+    "httpx>=0.28,<1.0",
+    "psutil~=7.2",
+    "psycopg[binary]~=3.2",
+    "python-dotenv~=1.2",
+    "whitenoise~=6.12",
+]
+
+[dependency-groups]
+dev = [
+    "black~=26.5",
+    "django-browser-reload~=1.21",
+    "django-debug-toolbar~=6.3",
+    "django-watchfiles~=1.4",
+    "djangorestframework-stubs>=3.17.0",
+    "factory-boy~=3.3",
+    "pytest~=9.0",
+    "pytest-cov~=7.1",
+    "pytest-django~=4.12",
+    "ruff>=0.15,<1.0",
+]
+
+# -----------------------------------------------------------------------------
+# BLACK
+# Docs: https://black.readthedocs.io/en/stable/usage_and_configuration/
+# -----------------------------------------------------------------------------
+
+[tool.black]
+line-length = 119
+target-version = ["py312"]
+exclude = '''
+/(
+    \.git
+  | \.venv
+  | migrations
+  | staticfiles
+)/
+'''
+
+# -----------------------------------------------------------------------------
+# RUFF
+# Configured for Django. Enable the DJ ruleset to catch Django-specific issues.
+# Docs: https://docs.astral.sh/ruff/rules/
+# -----------------------------------------------------------------------------
+
+[tool.ruff]
+line-length = 119
+target-version = "py312"
+exclude = [
+    ".git",
+    ".venv",
+    "migrations",
+    "staticfiles",
+]
+
+[tool.ruff.lint]
+select = [
+    "E",   # pycodestyle errors
+    "W",   # pycodestyle warnings
+    "F",   # pyflakes
+    "I",   # isort
+    "DJ",  # flake8-django — Django-specific rules
+    "N",   # pep8-naming
+    "UP",  # pyupgrade — modernise Python syntax
+]
+ignore = [
+    "E501",  # line too long — handled by black
+]
+
+[tool.ruff.lint.isort]
+known-first-party = ["prosper_backend"]
+section-order = [
+    "future",
+    "standard-library",
+    "django",
+    "third-party",
+    "first-party",
+    "local-folder",
+]
+
+[tool.ruff.lint.isort.sections]
+django = ["django"]
+
+# -----------------------------------------------------------------------------
+# PYTEST
+# Docs: https://docs.pytest.org/en/stable/reference/customize.html
+# -----------------------------------------------------------------------------
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "prosper_backend.settings.dev"
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = [
+    "--strict-markers",        # fail on unregistered markers
+    "--reuse-db",              # reuse test DB between runs (pytest-django)
+    "--cov",                   # enable coverage by default
+    "--cov-report=term-missing",
+]
+# No testpaths set — pytest discovers tests inside each app automatically.
+# Ensure each app's tests/ directory has an __init__.py.
+
+# -----------------------------------------------------------------------------
+# COVERAGE
+# Docs: https://coverage.readthedocs.io/en/stable/config.html
+# -----------------------------------------------------------------------------
+
+[tool.coverage.run]
+source = ["."]
+omit = [
+    "*/migrations/*",
+    "*/tests/*",
+    "*/settings/*",
+    "manage.py",
+    ".venv/*",
+]
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = false
+fail_under = 0  # Increase this as test coverage improves.

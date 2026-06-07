@@ -1,0 +1,8 @@
+# Changes here will be overwritten by Copier; NEVER EDIT MANUALLY
+_commit: 0.2.3
+_src_path: /home/kutologojm/PycharmProjects/copier_home/my_copier_templates/backend_templates/django_template/
+database: neon-postgres
+project_name: prosper_backend
+use_celery: true
+use_redis: true
+use_sentry_in_prod: true
