@@ -34,8 +34,8 @@ from apps.finances.serializers import input as input_serializers
 
 class AccountViewSet(MultiSerializerMixin, ModelViewSet):
     queryset = Account.objects.all()
-    input_serializer_class = input_serializers.AccountSerializer
-    output_serializer_class = output_serializers.AccountSerializer
+    input_serializer_class = input_serializers.AccountInputSerializer
+    output_serializer_class = output_serializers.AccountOutputSerializer
     lookup_field = "uuid"
     lookup_url_kwarg = "uuid"
 

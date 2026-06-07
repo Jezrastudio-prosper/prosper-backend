@@ -29,7 +29,7 @@ from apps.finances.models import Account, Bank, Currency
 from apps.accounts.serializers import UserSerializer
 
 
-class AccountSerializer(ModelSerializer):
+class AccountOutputSerializer(ModelSerializer):
     user = UserSerializer(read_only=True)
 
     class Meta:

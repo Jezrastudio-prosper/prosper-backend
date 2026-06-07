@@ -24,7 +24,7 @@ from apps.finances.models import Account
 from apps.accounts.serializers import UserSerializer
 
 
-class AccountSerializer(ModelSerializer):
+class AccountInputSerializer(ModelSerializer):
     user = UserSerializer(read_only=True)
 
     class Meta:
