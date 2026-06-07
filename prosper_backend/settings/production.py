@@ -53,7 +53,6 @@ if _REDIS_URL:
         }
     }
 
-
 # -----------------------------------------------------------------------------
 # EMAIL
 # Sends real email via SMTP in production.
@@ -75,21 +74,20 @@ SERVER_EMAIL = DEFAULT_FROM_EMAIL  # Used by mail_admins logging handler.
 # SENTRY
 # Docs: https://docs.sentry.io/platforms/python/integrations/django/
 # -----------------------------------------------------------------------------
- import sentry_sdk
- from sentry_sdk.integrations.django import DjangoIntegration
+import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
 
-  from sentry_sdk.integrations.celery import CeleryIntegration 
-  from sentry_sdk.integrations.redis import RedisIntegration 
+from sentry_sdk.integrations.celery import CeleryIntegration
+from sentry_sdk.integrations.redis import RedisIntegration
 
- sentry_sdk.init(
-     dsn=os.getenv("SENTRY_DSN"),
-     integrations=[
-         DjangoIntegration(),
-          CeleryIntegration(),  
-          RedisIntegration(),  
-     ],
-     # Percentage of transactions to send for performance monitoring (0.0 to 1.0).
-     traces_sample_rate=float(os.getenv("SENTRY_TRACES_SAMPLE_RATE", "0.1")),
-     send_default_pii=False,  # Don't send personally identifiable information by default.
- )
- 
+sentry_sdk.init(
+    dsn=os.getenv("SENTRY_DSN"),
+    integrations=[
+        DjangoIntegration(),
+        CeleryIntegration(),
+        RedisIntegration(),
+    ],
+    # Percentage of transactions to send for performance monitoring (0.0 to 1.0).
+    traces_sample_rate=float(os.getenv("SENTRY_TRACES_SAMPLE_RATE", "0.1")),
+    send_default_pii=False,  # Don't send personally identifiable information by default.
+)

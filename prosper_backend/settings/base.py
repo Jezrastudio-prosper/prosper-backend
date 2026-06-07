@@ -93,10 +93,9 @@ THIRD_PARTY_APPS = [
     "django_filters",
     "drf_spectacular",
 
-    
     # "django_celery_beat",        # uv add django-celery-beat (periodic tasks)
     # "django_celery_results",     # uv add django-celery-results (task result storage)
-    
+
 ]
 
 """
@@ -147,7 +146,6 @@ MIDDLEWARE = [
 # -----------------------------------------------------------------------------
 
 
-
 DATABASES = {
     "default": dj_database_url.config(
         default=os.getenv("DATABASE_URL"),
@@ -155,8 +153,6 @@ DATABASES = {
         ssl_require=True,
     )
 }
-
-
 
 # -----------------------------------------------------------------------------
 # TEMPLATES
@@ -325,17 +321,17 @@ REST_FRAMEWORK = {
 
 KNOX_TOKEN_MODEL = 'knox.AuthToken'
 REST_KNOX = {
-  'SECURE_HASH_ALGORITHM': 'hashlib.sha512',
-  'AUTH_TOKEN_CHARACTER_LENGTH': 64,
-  'TOKEN_TTL': timedelta(hours=10),
-  'USER_SERIALIZER': 'knox.serializers.UserSerializer',
-  'TOKEN_LIMIT_PER_USER': None,
-  'AUTO_REFRESH': False,
-  'AUTO_REFRESH_MAX_TTL': None,
-  'MIN_REFRESH_INTERVAL': 60,
-  'AUTH_HEADER_PREFIX': 'Token',
-  'EXPIRY_DATETIME_FORMAT': 'iso-8601',
-  'TOKEN_MODEL': 'knox.AuthToken',
+    'SECURE_HASH_ALGORITHM': 'hashlib.sha512',
+    'AUTH_TOKEN_CHARACTER_LENGTH': 64,
+    'TOKEN_TTL': timedelta(hours=10),
+    'USER_SERIALIZER': 'knox.serializers.UserSerializer',
+    'TOKEN_LIMIT_PER_USER': None,
+    'AUTO_REFRESH': False,
+    'AUTO_REFRESH_MAX_TTL': None,
+    'MIN_REFRESH_INTERVAL': 60,
+    'AUTH_HEADER_PREFIX': 'Token',
+    'EXPIRY_DATETIME_FORMAT': 'iso-8601',
+    'TOKEN_MODEL': 'knox.AuthToken',
 }
 
 # -----------------------------------------------------------------------------
@@ -357,7 +353,6 @@ SPECTACULAR_SETTINGS = {
 CORS_ALLOWED_ORIGINS = os.getenv("CORS_ALLOWED_ORIGINS", "").split(",")
 CORS_ALLOW_CREDENTIALS = True  # Set True only if sending cookies cross-origin.
 
-
 # -----------------------------------------------------------------------------
 # CELERY + REDIS
 # Requires: uv add celery redis django-celery-beat django-celery-results
@@ -373,7 +368,6 @@ CELERY_TASK_SERIALIZER = "json"
 CELERY_RESULT_SERIALIZER = "json"
 CELERY_TIMEZONE = TIME_ZONE
 CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
-
 
 # -----------------------------------------------------------------------------
 # CLOUDFLARE R2 STORAGE (optional)

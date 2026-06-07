@@ -82,7 +82,6 @@ DATABASES = {
     )
 }
 
-
 # -----------------------------------------------------------------------------
 # EMAIL
 # Prints emails to the console instead of sending them.
