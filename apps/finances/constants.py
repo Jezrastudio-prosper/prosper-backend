@@ -8,12 +8,23 @@ Rules:
     - Import from here rather than redefining values in models or serializers.
     - Keep constants grouped by the concept they represent.
     - Never import models here — this file must be importable with no side effects.
+    - Slugify all db names
 
 Example:
     from django.db import models
 
     class PostStatus(models.TextChoices):
+        variable = db_name, human-readable name
         DRAFT = "draft", "Draft"
         PUBLISHED = "published", "Published"
         ARCHIVED = "archived", "Archived"
+
 """
+from django.db import models
+
+
+class FinancesAccountTypes(models.TextChoices):
+    SAVINGS = "savings", "Savings"
+    CHECKING = "checking", "Checking"
+    CREDIT = "credit", "Credit"
+    EWALLET = "e-wallet", "E-wallet"
