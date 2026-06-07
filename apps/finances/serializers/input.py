@@ -25,20 +25,17 @@ from apps.accounts.serializers import UserSerializer
 
 
 class AccountSerializer(ModelSerializer):
+    user = UserSerializer(read_only=True)
+
     class Meta:
         model = Account
-
-        class AccountSerializer(ModelSerializer):
-            user = UserSerializer(read_only=True)
-
-            class Meta:
-                model = Account
-                fields = [
-                    "nickname",
-                    "type",
-                    "currency",
-                    "current_balance",
-                    "available_balance",
-                    "bank",
-                    "account_number",
-                ]
+        fields = [
+            "user",
+            "nickname",
+            "type",
+            "currency",
+            "current_balance",
+            "available_balance",
+            "bank",
+            "account_number",
+        ]
