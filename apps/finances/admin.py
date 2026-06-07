@@ -23,9 +23,9 @@ from .models import Account, Currency, Bank
 @admin.register(Account)
 class AccountAdmin(admin.ModelAdmin):
     list_display = (
-        'id',
         'created_at',
         'updated_at',
+        'uuid',
         'user',
         'nickname',
         'type',
@@ -73,6 +73,9 @@ class BankAdmin(admin.ModelAdmin):
         'legal_name',
         'alias',
         'bic',
+        'slug',
     )
     list_filter = ('created_at', 'updated_at')
+    search_fields = ('slug',)
     date_hierarchy = 'created_at'
+   

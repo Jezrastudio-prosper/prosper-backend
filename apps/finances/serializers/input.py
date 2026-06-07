@@ -4,8 +4,6 @@ Input serializers responsible for validating incoming request data.
 Docs: https://www.django-rest-framework.org/api-guide/serializers/
 
 Rules:
-    - Inherit from serializers.Serializer — not ModelSerializer.
-    - No Meta class, no model references, no save() calls.
     - Use validate_<field>() for field-level validation and validate() for cross-field validation.
     - Accept user via __init__ kwargs when a field's queryset depends on who is making the request.
     - Pass validated_data directly to a service — the serializer's job ends there.
@@ -20,3 +18,27 @@ Example:
                 raise serializers.ValidationError("A post with this title already exists.")
             return value
 """
+from rest_framework.serializers import ModelSerializer
+
+from apps.finances.models import Account
+from apps.accounts.serializers import UserSerializer
+
+
+class AccountSerializer(ModelSerializer):
+    class Meta:
+        model = Account
+
+        class AccountSerializer(ModelSerializer):
+            user = UserSerializer(read_only=True)
+
+            class Meta:
+                model = Account
+                fields = [
+                    "nickname",
+                    "type",
+                    "currency",
+                    "current_balance",
+                    "available_balance",
+                    "bank",
+                    "account_number",
+                ]

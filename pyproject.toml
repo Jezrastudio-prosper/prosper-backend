@@ -29,6 +29,7 @@ dependencies = [
     "psycopg[binary]~=3.2",
     "python-dotenv~=1.2",
     "sentry-sdk>=2.61.1",
+    "uuid>=1.30",
     "whitenoise~=6.12",
 ]
 

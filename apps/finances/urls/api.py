@@ -21,8 +21,16 @@ Example:
     ]
 """
 from django.urls import path
-from apps.finances import views
+from apps.finances.views import api as views
+from rest_framework import routers
+
+router = routers.DefaultRouter()
+router.register(r"accounts", views.AccountViewSet, basename="accounts")
+router.register(r"banks", views.BankViewSet, basename="banks")
+router.register(r"currencies", views.CurrencyViewSet, basename="currencies")
 
 urlpatterns = [
 
 ]
+
+urlpatterns += router.urls
