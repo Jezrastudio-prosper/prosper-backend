@@ -18,9 +18,9 @@ Example:
                 raise serializers.ValidationError("A post with this title already exists.")
             return value
 """
-from rest_framework.serializers import ModelSerializer
+from rest_framework.serializers import ModelSerializer, ValidationError
 
-from apps.finances.models import Account
+from apps.finances.models import Account, Category
 from apps.accounts.serializers import UserSerializer
 
 
@@ -39,3 +39,23 @@ class AccountInputSerializer(ModelSerializer):
             "bank",
             "account_number",
         ]
+
+
+class CategoryInputSerializer(ModelSerializer):
+    class Meta:
+        model = Category
+        fields = [
+            "id",
+            "name",
+            "parent"
+        ]
+
+    def validate(self, attrs):
+        parent = attrs.get('parent')
+        # Prevent a category from becoming its own parent during updates
+        if self.instance and parent == self.instance:
+            raise ValidationError({"parent": "A category cannot be its own parent."})
+        # Prevent loop: moving a parent into one of its own subcategories
+        if self.instance and parent and parent in self.instance.descendants():
+            raise ValidationError({"parent": "A category cannot be a child of its own sub-category."})
+        return attrs

@@ -27,11 +27,12 @@ Example:
         def __str__(self):
             return self.title
 """
+
 import uuid
 from django.conf import settings
 from django.db import models
 from django_extensions.db.fields import AutoSlugField
-
+from tree_queries.models import OrderableTreeNode
 from core.models import TimeStampedModel
 from apps.finances.constants import FinancesAccountTypes
 
@@ -97,3 +98,13 @@ class Bank(TimeStampedModel):
 
     def __str__(self):
         return f"{self.legal_name}: {self.alias}"
+
+
+class Category(OrderableTreeNode):
+    name = models.CharField(max_length=100)
+
+    # Default manager
+    objects = models.Manager()
+
+    class Meta(OrderableTreeNode.Meta):
+        verbose_name_plural = "Categories"

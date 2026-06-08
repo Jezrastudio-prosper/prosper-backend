@@ -25,7 +25,7 @@ Example:
 
 from rest_framework.serializers import ModelSerializer
 
-from apps.finances.models import Account, Bank, Currency
+from apps.finances.models import Account, Bank, Currency, Category
 from apps.accounts.serializers import UserSerializer
 
 
@@ -65,4 +65,14 @@ class BankSerializer(ModelSerializer):
             "alias",
             "bic",
             "slug",
+        ]
+
+
+class CategoryOutputSerializer(ModelSerializer):
+    class Meta:
+        model = Category
+        fields = [
+            "id",
+            "name",
+            "parent"
         ]

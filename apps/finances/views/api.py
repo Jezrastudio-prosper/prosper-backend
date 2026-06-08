@@ -27,7 +27,7 @@ Example:
 
 from rest_framework.viewsets import ReadOnlyModelViewSet, ModelViewSet
 from core.mixins import MultiSerializerMixin
-from apps.finances.models import Currency, Bank, Account
+from apps.finances.models import Currency, Bank, Account, Category
 from apps.finances.serializers import output as output_serializers
 from apps.finances.serializers import input as input_serializers
 
@@ -52,3 +52,11 @@ class CurrencyViewSet(ReadOnlyModelViewSet):
     serializer_class = output_serializers.CurrencySerializer
     lookup_field = 'iso_code'
     lookup_url_kwarg = 'iso_code'
+
+
+class CategoryViewSet(MultiSerializerMixin, ModelViewSet):
+    queryset = Category.objects.all()
+    input_serializer_class = input_serializers.CategoryInputSerializer
+    output_serializer_class = output_serializers.CategoryOutputSerializer
+    lookup_field = "id"
+    lookup_url_kwarg = "id"

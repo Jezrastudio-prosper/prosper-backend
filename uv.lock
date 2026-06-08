@@ -298,6 +298,15 @@ wheels = [
 ]
 
 [[package]]
+name = "django-tree-queries"
+version = "0.24.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/e3/6d/eaee27d299a5a8874205a783632a9383c16e9a2e73e8a98f0f19f921a2e2/django_tree_queries-0.24.0.tar.gz", hash = "sha256:8971da3fd15a1e6a52a5a2af76c086aa460e6974a130d9ec90ca0d0588baf848", size = 41134, upload-time = "2026-03-25T14:49:46.289Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/33/f5/85030fa7c200847f413d3ddba348fe450194e2520d893b12e92f690996c9/django_tree_queries-0.24.0-py3-none-any.whl", hash = "sha256:568adb664cd9dab55c0e39ab44bb7c0931854cdea1463beb16a89228f9d99ec7", size = 35631, upload-time = "2026-03-25T14:49:44.452Z" },
+]
+
+[[package]]
 name = "django-watchfiles"
 version = "1.4.0"
 source = { registry = "https://pypi.org/simple" }
@@ -548,6 +557,7 @@ dependencies = [
     { name = "django-filter" },
     { name = "django-health-check" },
     { name = "django-rest-knox" },
+    { name = "django-tree-queries" },
     { name = "djangorestframework" },
     { name = "drf-spectacular" },
     { name = "gunicorn" },
@@ -585,6 +595,7 @@ requires-dist = [
     { name = "django-filter", specifier = "~=25.2" },
     { name = "django-health-check", specifier = "~=4.4" },
     { name = "django-rest-knox", specifier = ">=5.0.4" },
+    { name = "django-tree-queries", specifier = ">=0.24.0" },
     { name = "djangorestframework", specifier = "~=3.17" },
     { name = "drf-spectacular", specifier = ">=0.29,<1.0" },
     { name = "gunicorn", specifier = "~=26.0" },
