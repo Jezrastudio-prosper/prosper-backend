@@ -28,6 +28,7 @@ router = routers.DefaultRouter()
 router.register(r"accounts", views.AccountViewSet, basename="accounts")
 router.register(r"banks", views.BankViewSet, basename="banks")
 router.register(r"currencies", views.CurrencyViewSet, basename="currencies")
+router.register(r"categories", views.CategoryViewSet, basename="categories")
 
 urlpatterns = [
 

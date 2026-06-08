@@ -17,7 +17,7 @@ Example:
 """
 from django.contrib import admin
 
-from .models import Account, Currency, Bank
+from .models import Account, Currency, Bank, Category
 
 
 @admin.register(Account)
@@ -78,4 +78,10 @@ class BankAdmin(admin.ModelAdmin):
     list_filter = ('created_at', 'updated_at')
     search_fields = ('slug',)
     date_hierarchy = 'created_at'
-   
+
+
+@admin.register(Category)
+class CategoryAdmin(admin.ModelAdmin):
+    list_display = ('id', 'parent', 'position', 'name')
+    list_filter = ('parent',)
+    search_fields = ('name',)
