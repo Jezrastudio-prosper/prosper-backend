@@ -7,16 +7,19 @@ from knox.views import (
 )
 from rest_framework import serializers
 from rest_framework.authtoken.serializers import AuthTokenSerializer
+from apps.accounts.serializers import UserSerializer
 
 
 # Defines what Knox actually returns on a successful login
 class KnoxLoginResponseSerializer(serializers.Serializer):
     token = serializers.CharField(help_text="The secure token string to place in your Authorization header.")
     expiry = serializers.DateTimeField(help_text="The timestamp when this token expires.")
+    user = UserSerializer(read_only=True)
 
 
 class LoginView(KnoxLoginView):
-    schema = SpectacularAutoSchema()
+    authentication_classes = []
+    permission_classes = []
 
     @extend_schema(
         request=AuthTokenSerializer,
@@ -25,12 +28,13 @@ class LoginView(KnoxLoginView):
         description="Submit credentials to receive a fresh Knox authentication token."
     )
     def post(self, request, format=None):
+        serializer = AuthTokenSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        request.user = serializer.validated_data['user']
         return super().post(request, format)
 
 
 class LogoutView(KnoxLogoutView):
-    schema = SpectacularAutoSchema()
-
     @extend_schema(
         request=None,
         responses={204: None},
@@ -41,8 +45,6 @@ class LogoutView(KnoxLogoutView):
 
 
 class LogoutAllView(KnoxLogoutAllView):
-    schema = SpectacularAutoSchema()
-
     @extend_schema(
         request=None,
         responses={204: None},
