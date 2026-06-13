@@ -29,6 +29,7 @@ Example:
 """
 from django.db import models
 from core.models import TimeStampedModel, TimeStampedUUIDModel
+from apps.transactions.constants import TransactionType, TransactionStatus
 
 
 class Transaction(TimeStampedUUIDModel):
@@ -36,37 +37,38 @@ class Transaction(TimeStampedUUIDModel):
     merchant = models.ForeignKey("Merchant", on_delete=models.CASCADE, related_name="transactions")
     category = models.ForeignKey("Category", on_delete=models.CASCADE, related_name="transactions")
     amount = models.DecimalField(max_digits=10, decimal_places=2)
-    type = models.CharField()  # fixme
-    status = models.CharField()  # fixme
-    note = models.TextField()
+    type = models.CharField(max_length=100, choices=TransactionType)
+    status = models.CharField(max_length=100, choices=TransactionStatus)
+    note = models.TextField(blank=True)
     date = models.DateTimeField(auto_now_add=True)
 
     # Default manager
     objects = models.Manager()
 
     class Meta:
-        ordering = [""]
-        verbose_name_plural = ""
+        ordering = ["-created_at"]
+        verbose_name_plural = "Transactions"
 
     def __str__(self):
-        return f"{}"
+        currency_symbol = self.account.currency.symbol
+        return f"{self.category.name.capitalize()} of {currency_symbol}{self.amount} on {self.date or 'unpaid'}"
 
 
 class TransactionItem(models.Model):
-    transaction = models.ForeignKey("Transaction", on_delete=models.CASCADE, related_name="items")
-    merchant_item = models.ForeignKey("MerchantItem", on_delete=models.CASCADE, related_name="items")
-    description = models.TextField()
+    transaction = models.ForeignKey("Transaction", on_delete=models.CASCADE, related_name="transaction_items")
+    merchant_item = models.ForeignKey("MerchantItem", on_delete=models.CASCADE, related_name="transaction_items")
+    description = models.TextField(blank=True)
     quantity = models.PositiveIntegerField(default=0)
     unit_price = models.DecimalField(max_digits=10, decimal_places=2)
     subtotal = models.DecimalField(max_digits=10, decimal_places=2)
-    note = models.TextField()
+    note = models.TextField(blank=True)
 
     # Default manager
     objects = models.Manager()
 
     class Meta:
-        ordering = [""]
-        verbose_name_plural = ""
+        ordering = ["transaction"]
+        verbose_name_plural = "Transaction Items"
 
     def __str__(self):
-        return f"{}"
+        return f"{self.merchant_item} x{self.quantity} — {self.subtotal}"

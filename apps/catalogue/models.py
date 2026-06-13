@@ -29,20 +29,21 @@ Example:
 """
 from django.db import models
 from core.models import TimeStampedUUIDModel
+from apps.catalogue.constants import Units
 
 
 class Item(TimeStampedUUIDModel):
     name = models.CharField(max_length=200)
-    description = models.TextField()
-    unit = models.CharField()  # fixme
+    description = models.TextField(blank=True)
+    unit = models.CharField(choices=Units, max_length=30)
     category = models.ForeignKey("Category", on_delete=models.CASCADE, related_name="items")
 
     # Default manager
     objects = models.Manager()
 
     class Meta:
-        ordering = [""]
-        verbose_name_plural = ""
+        ordering = ["name"]
+        verbose_name_plural = "Items"
 
     def __str__(self):
-        return f"{}"
+        return f"{self.name}"

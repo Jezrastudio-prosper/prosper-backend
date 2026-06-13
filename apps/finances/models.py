@@ -33,14 +33,13 @@ from django.conf import settings
 from django.db import models
 from django_extensions.db.fields import AutoSlugField
 from tree_queries.models import OrderableTreeNode
-from core.models import TimeStampedModel
+from core.models import TimeStampedModel, TimeStampedUUIDModel
 from apps.finances.constants import FinancesAccountTypes
 
 USER_MODEL = settings.AUTH_USER_MODEL
 
 
-class Account(TimeStampedModel):
-    uuid = models.UUIDField(primary_key=True, default=uuid.uuid7, editable=False, db_index=True)
+class Account(TimeStampedUUIDModel):
     user = models.ForeignKey(USER_MODEL, on_delete=models.CASCADE, related_name="accounts")
     nickname = models.CharField(max_length=100, unique=True)
     type = models.CharField(max_length=50, choices=FinancesAccountTypes)
@@ -49,7 +48,7 @@ class Account(TimeStampedModel):
     available_balance = models.DecimalField(max_digits=10, decimal_places=2)
     is_active = models.BooleanField(default=True)
     bank = models.ForeignKey("Bank", on_delete=models.CASCADE, related_name="accounts", blank=True, null=True)
-    account_number = models.CharField(max_length=4, unique=True, blank=True, null=True)
+    account_number = models.CharField(max_length=4, unique=True, blank=True)
 
     # Default manager
     objects = models.Manager()
@@ -83,8 +82,7 @@ class Currency(TimeStampedModel):
         return f"({self.iso_code}) {self.symbol} {self.name}"
 
 
-class Bank(TimeStampedModel):
-    uuid = models.UUIDField(primary_key=True, default=uuid.uuid7, editable=False, db_index=True)
+class Bank(TimeStampedUUIDModel):
     legal_name = models.CharField(max_length=50)
     alias = models.CharField(max_length=50)
     bic = models.CharField(max_length=11)
@@ -104,7 +102,7 @@ class Bank(TimeStampedModel):
 class Category(OrderableTreeNode):
     name = models.CharField(max_length=100)
     uuid = models.UUIDField(primary_key=True, default=uuid.uuid7, editable=False, db_index=True)
-    
+
     # Default manager
     objects = models.Manager()
 

@@ -17,3 +17,25 @@ Example:
         PUBLISHED = "published", "Published"
         ARCHIVED = "archived", "Archived"
 """
+from django.db import models
+
+
+class Units(models.TextChoices):
+    # Weight
+    GRAMS = "grams", "Grams"
+    KILOGRAMS = "kilograms", "Kilograms"
+
+    # Volume
+    MILLILITRES = "millilitres", "Millilitres"
+    LITRES = "litres", "Litres"
+
+    # Count
+    PIECE = "piece", "Piece"
+    DOZEN = "dozen", "Dozen"
+
+    # Length
+    CENTIMETRES = "centimetres", "Centimetres"
+
+    # Packs/Bundles (bread, noodles, sachets)
+    PACK = "pack", "Pack"
+    BUNDLE = "bundle", "Bundle"

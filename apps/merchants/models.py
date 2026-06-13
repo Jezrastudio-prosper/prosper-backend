@@ -33,31 +33,31 @@ from core.models import TimeStampedUUIDModel
 
 
 class Merchant(TimeStampedUUIDModel):
-    name = models.CharField()
-    description = models.TextField()
+    name = models.CharField(max_length=200)
+    description = models.TextField(blank=True)
 
     # Default manager
     objects = models.Manager()
 
     class Meta:
-        ordering = [""]
-        verbose_name_plural = ""
+        ordering = ["name"]
+        verbose_name_plural = "Merchants"
 
     def __str__(self):
-        return f"{}"
+        return f"{self.name}"
 
 
 class MerchantItem(models.Model):
-    item = models.ForeignKey("Item", on_delete=models.CASCADE, related_name="items")
-    merchant = models.ForeignKey("Merchant", on_delete=models.CASCADE, related_name="items")
+    item = models.ForeignKey("Item", on_delete=models.CASCADE, related_name="merchant_items")
+    merchant = models.ForeignKey("Merchant", on_delete=models.CASCADE, related_name="merchant_items")
     price = models.DecimalField(max_digits=10, decimal_places=2)
 
     # Default manager
     objects = models.Manager()
 
     class Meta:
-        ordering = [""]
-        verbose_name_plural = ""
+        ordering = ["item__name"]
+        verbose_name_plural = "Merchant Items"
 
     def __str__(self):
-        return f"{}"
+        return f"{self.item.name}"

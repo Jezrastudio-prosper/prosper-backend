@@ -17,3 +17,17 @@ Example:
         PUBLISHED = "published", "Published"
         ARCHIVED = "archived", "Archived"
 """
+from django.db import models
+
+
+class TransactionType(models.TextChoices):
+    WITHDRAWAL = "withdrawal", "Withdrawal"
+    TRANSFER = "transfer", "Transfer"
+    EXPENSE = "expense", "Expense"
+    INCOME = "income", "Income"
+
+
+class TransactionStatus(models.TextChoices):
+    UNPAID = "unpaid", "Unpaid"
+    PAID = "paid", "Paid"
+    PENDING = "pending", "Pending"
