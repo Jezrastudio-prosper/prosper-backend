@@ -27,3 +27,22 @@ Example:
         def __str__(self):
             return self.title
 """
+from django.db import models
+from core.models import TimeStampedUUIDModel
+
+
+class Item(TimeStampedUUIDModel):
+    name = models.CharField(max_length=200)
+    description = models.TextField()
+    unit = models.CharField()  # fixme
+    category = models.ForeignKey("Category", on_delete=models.CASCADE, related_name="items")
+
+    # Default manager
+    objects = models.Manager()
+
+    class Meta:
+        ordering = [""]
+        verbose_name_plural = ""
+
+    def __str__(self):
+        return f"{}"

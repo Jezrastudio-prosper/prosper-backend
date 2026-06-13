@@ -84,6 +84,7 @@ class Currency(TimeStampedModel):
 
 
 class Bank(TimeStampedModel):
+    uuid = models.UUIDField(primary_key=True, default=uuid.uuid7, editable=False, db_index=True)
     legal_name = models.CharField(max_length=50)
     alias = models.CharField(max_length=50)
     bic = models.CharField(max_length=11)
@@ -102,7 +103,8 @@ class Bank(TimeStampedModel):
 
 class Category(OrderableTreeNode):
     name = models.CharField(max_length=100)
-
+    uuid = models.UUIDField(primary_key=True, default=uuid.uuid7, editable=False, db_index=True)
+    
     # Default manager
     objects = models.Manager()
 
@@ -111,4 +113,3 @@ class Category(OrderableTreeNode):
 
     def __str__(self):
         return f"{self.name}"
-    

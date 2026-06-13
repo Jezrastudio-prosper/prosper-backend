@@ -27,3 +27,46 @@ Example:
         def __str__(self):
             return self.title
 """
+from django.db import models
+from core.models import TimeStampedModel, TimeStampedUUIDModel
+
+
+class Transaction(TimeStampedUUIDModel):
+    account = models.ForeignKey("Account", on_delete=models.CASCADE, related_name="transactions")
+    merchant = models.ForeignKey("Merchant", on_delete=models.CASCADE, related_name="transactions")
+    category = models.ForeignKey("Category", on_delete=models.CASCADE, related_name="transactions")
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    type = models.CharField()  # fixme
+    status = models.CharField()  # fixme
+    note = models.TextField()
+    date = models.DateTimeField(auto_now_add=True)
+
+    # Default manager
+    objects = models.Manager()
+
+    class Meta:
+        ordering = [""]
+        verbose_name_plural = ""
+
+    def __str__(self):
+        return f"{}"
+
+
+class TransactionItem(models.Model):
+    transaction = models.ForeignKey("Transaction", on_delete=models.CASCADE, related_name="items")
+    merchant_item = models.ForeignKey("MerchantItem", on_delete=models.CASCADE, related_name="items")
+    description = models.TextField()
+    quantity = models.PositiveIntegerField(default=0)
+    unit_price = models.DecimalField(max_digits=10, decimal_places=2)
+    subtotal = models.DecimalField(max_digits=10, decimal_places=2)
+    note = models.TextField()
+
+    # Default manager
+    objects = models.Manager()
+
+    class Meta:
+        ordering = [""]
+        verbose_name_plural = ""
+
+    def __str__(self):
+        return f"{}"

@@ -30,10 +30,19 @@ Example:
 
 # Shared models
 from django.db import models
+import uuid
+
 
 class TimeStampedModel(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        abstract = True
+
+
+class TimeStampedUUIDModel(TimeStampedModel):
+    uuid = models.UUIDField(default=uuid.uuid7, editable=False, primary_key=True)
 
     class Meta:
         abstract = True
