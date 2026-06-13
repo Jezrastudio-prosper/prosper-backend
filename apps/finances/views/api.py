@@ -58,5 +58,5 @@ class CategoryViewSet(MultiSerializerMixin, ModelViewSet):
     queryset = Category.objects.all()
     input_serializer_class = input_serializers.CategoryInputSerializer
     output_serializer_class = output_serializers.CategoryOutputSerializer
-    lookup_field = "id"
-    lookup_url_kwarg = "id"
+    lookup_field = "uuid"
+    lookup_url_kwarg = "uuid"

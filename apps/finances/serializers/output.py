@@ -74,7 +74,7 @@ class CategoryOutputSerializer(ModelSerializer):
     class Meta:
         model = Category
         fields = [
-            "id",
+            "uuid",
             "name",
             "parent",
             "parent_name",
