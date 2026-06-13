@@ -23,7 +23,7 @@ Example:
             return [tag.name for tag in obj.tags.all()]
 """
 
-from rest_framework.serializers import ModelSerializer
+from rest_framework.serializers import ModelSerializer, ReadOnlyField
 
 from apps.finances.models import Account, Bank, Currency, Category
 from apps.accounts.serializers import UserSerializer
@@ -69,10 +69,13 @@ class BankSerializer(ModelSerializer):
 
 
 class CategoryOutputSerializer(ModelSerializer):
+    parent_name = ReadOnlyField(source='parent.name')
+
     class Meta:
         model = Category
         fields = [
             "id",
             "name",
-            "parent"
+            "parent",
+            "parent_name",
         ]
