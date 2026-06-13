@@ -36,7 +36,7 @@ class Item(TimeStampedUUIDModel):
     name = models.CharField(max_length=200)
     description = models.TextField(blank=True)
     unit = models.CharField(choices=Units, max_length=30)
-    category = models.ForeignKey("Category", on_delete=models.CASCADE, related_name="items")
+    category = models.ForeignKey("finances.Category", on_delete=models.CASCADE, related_name="items")
 
     # Default manager
     objects = models.Manager()

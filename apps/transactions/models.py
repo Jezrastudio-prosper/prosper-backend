@@ -33,9 +33,9 @@ from apps.transactions.constants import TransactionType, TransactionStatus
 
 
 class Transaction(TimeStampedUUIDModel):
-    account = models.ForeignKey("Account", on_delete=models.CASCADE, related_name="transactions")
-    merchant = models.ForeignKey("Merchant", on_delete=models.CASCADE, related_name="transactions")
-    category = models.ForeignKey("Category", on_delete=models.CASCADE, related_name="transactions")
+    account = models.ForeignKey("finances.Account", on_delete=models.CASCADE, related_name="transactions")
+    merchant = models.ForeignKey("merchants.Merchant", on_delete=models.CASCADE, related_name="transactions")
+    category = models.ForeignKey("finances.Category", on_delete=models.CASCADE, related_name="transactions")
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     type = models.CharField(max_length=100, choices=TransactionType)
     status = models.CharField(max_length=100, choices=TransactionStatus)
@@ -56,7 +56,7 @@ class Transaction(TimeStampedUUIDModel):
 
 class TransactionItem(models.Model):
     transaction = models.ForeignKey("Transaction", on_delete=models.CASCADE, related_name="transaction_items")
-    merchant_item = models.ForeignKey("MerchantItem", on_delete=models.CASCADE, related_name="transaction_items")
+    merchant_item = models.ForeignKey("merchants.MerchantItem", on_delete=models.CASCADE, related_name="transaction_items")
     description = models.TextField(blank=True)
     quantity = models.PositiveIntegerField(default=0)
     unit_price = models.DecimalField(max_digits=10, decimal_places=2)

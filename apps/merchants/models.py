@@ -48,7 +48,7 @@ class Merchant(TimeStampedUUIDModel):
 
 
 class MerchantItem(models.Model):
-    item = models.ForeignKey("Item", on_delete=models.CASCADE, related_name="merchant_items")
+    item = models.ForeignKey("catalogue.Item", on_delete=models.CASCADE, related_name="merchant_items")
     merchant = models.ForeignKey("Merchant", on_delete=models.CASCADE, related_name="merchant_items")
     price = models.DecimalField(max_digits=10, decimal_places=2)
 
