@@ -15,3 +15,22 @@ Example:
         list_filter = ["is_published"]
         search_fields = ["title", "author__username"]
 """
+from django.contrib import admin
+
+from .models import Item
+
+
+@admin.register(Item)
+class ItemAdmin(admin.ModelAdmin):
+    list_display = (
+        'created_at',
+        'updated_at',
+        'uuid',
+        'name',
+        'description',
+        'unit',
+        'category',
+    )
+    list_filter = ('created_at', 'updated_at', 'category')
+    search_fields = ('name',)
+    date_hierarchy = 'created_at'

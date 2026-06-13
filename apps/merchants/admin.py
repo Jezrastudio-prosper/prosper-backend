@@ -15,3 +15,26 @@ Example:
         list_filter = ["is_published"]
         search_fields = ["title", "author__username"]
 """
+from django.contrib import admin
+
+from .models import Merchant, MerchantItem
+
+
+@admin.register(Merchant)
+class MerchantAdmin(admin.ModelAdmin):
+    list_display = (
+        'created_at',
+        'updated_at',
+        'uuid',
+        'name',
+        'description',
+    )
+    list_filter = ('created_at', 'updated_at')
+    search_fields = ('name',)
+    date_hierarchy = 'created_at'
+
+
+@admin.register(MerchantItem)
+class MerchantItemAdmin(admin.ModelAdmin):
+    list_display = ('id', 'item', 'merchant', 'price')
+    list_filter = ('item', 'merchant')
