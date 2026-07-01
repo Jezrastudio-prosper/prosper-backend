@@ -24,3 +24,17 @@ Example:
                 return Response({"detail": str(e)}, status=400)
             return Response(PostOutputSerializer(post).data, status=201)
 """
+
+from rest_framework.viewsets import ModelViewSet
+from core.mixins import MultiSerializerMixin
+from apps.transactions.models import Transaction
+from apps.transactions.serializers import output as output_serializers
+from apps.transactions.serializers import input as input_serializers
+
+
+class TransactionViewSet(MultiSerializerMixin, ModelViewSet):
+    queryset = Transaction.objects.all()
+    input_serializer_class = input_serializers.TransactionInputSerializer
+    output_serializer_class = output_serializers.TransactionOutputSerializer
+    lookup_field = "uuid"
+    lookup_url_kwarg = "uuid"

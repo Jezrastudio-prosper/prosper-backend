@@ -20,3 +20,13 @@ Example:
         path("posts/<slug:slug>/", PostDetailView.as_view(), name="post-detail"),
     ]
 """
+from apps.transactions.views import api as views
+from rest_framework import routers
+
+router = routers.DefaultRouter()
+router.register(r"transactions", views.TransactionViewSet, basename="transactions")
+urlpatterns = [
+
+]
+
+urlpatterns += router.urls

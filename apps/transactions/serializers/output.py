@@ -22,3 +22,43 @@ Example:
         def get_tag_list(self, obj):
             return [tag.name for tag in obj.tags.all()]
 """
+from rest_framework import serializers
+from rest_framework.serializers import ModelSerializer
+
+from apps.transactions.models import Transaction, TransactionItem
+from apps.merchants.serializers.output import MerchantItemOutputSerializer
+
+
+class TransactionItemOutputSerializer(ModelSerializer):
+    merchant_item = MerchantItemOutputSerializer()
+    class Meta:
+        model = TransactionItem
+        fields = [
+            "merchant_item",
+            "description",
+            "quantity",
+            "unit_price",
+            "subtotal",
+            "note"
+        ]
+
+
+class TransactionOutputSerializer(ModelSerializer):
+    transaction_items = TransactionItemOutputSerializer(many=True)
+
+    class Meta:
+        model = Transaction
+        fields = [
+            "uuid",
+            "created_at",
+            "updated_at",
+            "date",
+            "account",  # fk
+            "merchant",  # fk
+            "category",
+            "amount",
+            "type",
+            "status",
+            "note",
+            "transaction_items"
+        ]

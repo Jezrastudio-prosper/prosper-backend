@@ -20,3 +20,12 @@ Example:
                 raise serializers.ValidationError("A post with this title already exists.")
             return value
 """
+from rest_framework.serializers import ModelSerializer
+
+from apps.transactions.models import Transaction
+
+
+class TransactionInputSerializer(ModelSerializer):
+    class Meta:
+        model = Transaction
+        fields = '__all__'
